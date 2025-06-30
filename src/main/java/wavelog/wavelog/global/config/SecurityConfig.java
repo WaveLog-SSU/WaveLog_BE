@@ -28,7 +28,7 @@ public class SecurityConfig {
         JwtAuthenticationFilter jwtFilter = new JwtAuthenticationFilter(tokenProvider, userDetailsService);
 
         http
-                // CSRF 비활성화 (람다 스타일)
+                // CSRF 비활성화
         .csrf(csrf -> csrf.disable())
                 // 세션 없이 JWT만으로 인증
         .sessionManagement(session ->
@@ -36,7 +36,7 @@ public class SecurityConfig {
         )
                 // 엔드포인트별 접근 제어
         .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/api/members/register", "/api/members/login").permitAll()
                 .anyRequest().authenticated()
         )
                 // JWT 필터 등록
