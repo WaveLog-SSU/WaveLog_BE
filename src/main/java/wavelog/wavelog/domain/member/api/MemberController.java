@@ -3,7 +3,11 @@ package wavelog.wavelog.domain.member.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import wavelog.wavelog.domain.member.dto.LoginRequest;
+import wavelog.wavelog.domain.member.dto.LoginResponse;
 import wavelog.wavelog.domain.member.dto.SignUpRequest;
 import wavelog.wavelog.domain.member.dto.SignUpResponse;
 import wavelog.wavelog.domain.member.application.MemberService;
@@ -23,5 +27,12 @@ public class MemberController {
                 .status(HttpStatus.CREATED)  // 201 Created
                 .body(response);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        LoginResponse response = memberService.login(request);
+        return ResponseEntity.ok(response);
+    }
+
 
 }
