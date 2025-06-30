@@ -1,0 +1,5 @@
+jwt:
+  secret: "${JWT_SECRET}"
+  expiration-ms: 3600000        # 1시간
+  header: Authorization
+  prefix: Bearer
