@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import wavelog.wavelog.domain.bookmark.domain.entity.Bookmark;
 import wavelog.wavelog.domain.comment.domain.entity.Comment;
 import wavelog.wavelog.domain.hashtag.domain.entity.Hashtag;
 import wavelog.wavelog.domain.like.domain.entity.Like;
@@ -53,6 +54,9 @@ public class Diary extends BaseEntity {
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     @Builder
     public Diary(String title, String code, String content, Integer likeCount, Integer viewCount, String category) {
