@@ -19,6 +19,10 @@ public class Comment extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_comment_id")
+    private Comment parentComment;
+
     @Builder
     public Comment(String content) {
         this.content = content;

@@ -23,7 +23,7 @@ public class Like extends BaseEntity {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "diary_id")
     private Diary diary;
 
 }
