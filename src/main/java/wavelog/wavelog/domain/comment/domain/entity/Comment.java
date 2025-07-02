@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import wavelog.wavelog.domain.diary.domain.entity.Diary;
 import wavelog.wavelog.global.common.domain.entity.BaseEntity;
 
 @Entity
@@ -18,6 +19,10 @@ public class Comment extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "diary_id")
+    private Diary diary;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
