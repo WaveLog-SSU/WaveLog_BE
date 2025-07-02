@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import wavelog.wavelog.domain.bookmark.entity.Bookmark;
-import wavelog.wavelog.domain.comment.Comment;
+import wavelog.wavelog.domain.bookmark.domain.entity.Bookmark;
+import wavelog.wavelog.domain.comment.domain.entity.Comment;
 import wavelog.wavelog.domain.diary.domain.entity.Diary;
-import wavelog.wavelog.domain.like.Like;
+import wavelog.wavelog.domain.like.domain.entity.Like;
 import wavelog.wavelog.global.common.domain.entity.BaseEntity;
 
 import java.util.ArrayList;

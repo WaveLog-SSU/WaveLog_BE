@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import wavelog.wavelog.domain.comment.Comment;
-import wavelog.wavelog.domain.hashtag.Hashtag;
-import wavelog.wavelog.domain.like.Like;
+import wavelog.wavelog.domain.comment.domain.entity.Comment;
+import wavelog.wavelog.domain.hashtag.domain.entity.Hashtag;
+import wavelog.wavelog.domain.like.domain.entity.Like;
 import wavelog.wavelog.global.common.domain.entity.BaseEntity;
 
 import java.util.ArrayList;

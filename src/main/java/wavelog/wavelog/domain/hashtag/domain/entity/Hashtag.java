@@ -1,4 +1,4 @@
-package wavelog.wavelog.domain.hashtag;
+package wavelog.wavelog.domain.hashtag.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package wavelog.wavelog.domain.bookmark.entity;
+package wavelog.wavelog.domain.bookmark.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

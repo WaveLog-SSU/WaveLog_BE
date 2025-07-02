@@ -1,4 +1,4 @@
-package wavelog.wavelog.domain.comment;
+package wavelog.wavelog.domain.comment.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;

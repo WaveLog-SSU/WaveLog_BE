@@ -1,7 +1,6 @@
-package wavelog.wavelog.domain.like;
+package wavelog.wavelog.domain.like.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wavelog.wavelog.domain.diary.domain.entity.Diary;
