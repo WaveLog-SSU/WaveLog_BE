@@ -4,7 +4,11 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import wavelog.wavelog.domain.diary.domain.entity.Diary;
 import wavelog.wavelog.global.common.domain.entity.BaseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +22,9 @@ public class Hashtag extends BaseEntity {
 
     @Column
     private String tag;
+
+    @ManyToMany(mappedBy = "hashtags")
+    private List<Diary> diaries = new ArrayList<>();
 
     @Builder
     public Hashtag(String tag) {
