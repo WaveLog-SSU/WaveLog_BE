@@ -68,3 +68,9 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+
+//http
+//        .authorizeHttpRequests(auth -> auth
+//        .requestMatchers("/api/register").permitAll()  // 회원가입은 인증 없이 접근 허용
+//    .anyRequest().authenticated()                   // 나머지는 인증 필요
+//  )

@@ -18,19 +18,6 @@ import javax.swing.text.View;
 @RestController
 @RequestMapping("/api/diaries")
 @RequiredArgsConstructor
-//@PostMapping("/register")
-//public ResponseEntity<SignUpResponse> signUp(@RequestBody SignUpRequest request) {
-//    SignUpResponse response = memberService.signUp(request);
-//    return ResponseEntity
-//            .status(HttpStatus.CREATED)  // 201 Created
-//            .body(response);
-//}
-//
-//@PostMapping("/login")
-//public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-//    LoginResponse response = memberService.login(request);
-//    return ResponseEntity.ok(response);
-//}
 public class DiaryController {
     private final DiaryService diaryService;
 
@@ -55,9 +42,9 @@ public class DiaryController {
     }
 
     @DeleteMapping("/delete")
-        public ResponseEntity<DeleteResponse> delete(@RequestBody DeleteRequest request) {
-            DeleteResponse response = diaryService.delete(request);
-            return ResponseEntity.ok(response);
+    public ResponseEntity<DeleteResponse> delete(@RequestBody DeleteRequest request) {
+        DeleteResponse response = diaryService.delete(request);
+        return ResponseEntity.ok(response);
     }
 
 }

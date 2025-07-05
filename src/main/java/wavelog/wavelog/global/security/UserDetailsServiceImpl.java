@@ -24,12 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         } catch (NumberFormatException e) {
             throw new UsernameNotFoundException("Invalid user ID: " + subject, e);
         }
+
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new UsernameNotFoundException(memberId + " 사용자를 찾을 수 없습니다."));
-        return User.builder()
-                .username(member.getWavelogId())
-                .password(member.getPassword())
-                .authorities(Collections.emptyList())  // 권한이 없다면 빈 리스트
-                .build();
+        return new CustomUserDetails(member);
     }
 }

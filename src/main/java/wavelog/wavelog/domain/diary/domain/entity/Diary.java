@@ -34,10 +34,10 @@ public class Diary extends BaseEntity {
     private String content;
 
     @Column(name = "like_count")
-    private Integer likeCount;
+    private Integer likeCount = 0;
 
     @Column(name = "view_count")
-    private Integer viewCount;
+    private Integer viewCount = 0;
 
     @Column
     private String category;
@@ -83,6 +83,16 @@ public class Diary extends BaseEntity {
         this.category = category;
 //        if(hashtags != null)
 //            this.hashtags = new ArrayList<>(hashtags);
+    }
+    // 좋아요 수 증가 감소 메서드
+    public void addLikeCount()
+    {
+        this.likeCount++;
+    }
+
+    public void deleteLikeCount() {
+        if(this.likeCount > 0)
+            this.likeCount--;
     }
 
 }

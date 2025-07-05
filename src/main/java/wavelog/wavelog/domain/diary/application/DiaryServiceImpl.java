@@ -34,7 +34,7 @@ public class DiaryServiceImpl implements DiaryService{
                 .viewCount(0)
                 .member(member)
                 .build();
-        diary = diaryRepository.save(diary);
+        diaryRepository.save(diary);
         // DTO 반환
         return CreateResponse.builder()
                 .id(diary.getId())
@@ -71,7 +71,7 @@ public class DiaryServiceImpl implements DiaryService{
                 request.getContent(),
                 request.getCategory()
         );
-        diary = diaryRepository.save(diary);
+        diaryRepository.save(diary);
         // DTO 반환
         return UpdateResponse.builder()
                 .id(diary.getId())
