@@ -8,6 +8,9 @@ import wavelog.wavelog.domain.diary.domain.entity.Diary;
 import wavelog.wavelog.domain.member.domain.entity.Member;
 import wavelog.wavelog.global.common.domain.entity.BaseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -18,12 +21,13 @@ public class Comment extends BaseEntity {
     @Column(name = "comment_id")
     private Long id;
 
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
-    @Column(columnDefinition = "TEXT")
-    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id")
@@ -33,8 +37,14 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "parent_comment_id")
     private Comment parentComment;
 
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> replies = new ArrayList<>();
+
     @Builder
-    public Comment(String content) {
+    public Comment(String content, Member member, Diary diary, Comment parentComment) {
         this.content = content;
+        this.member = member;
+        this.diary = diary;
+        this.parentComment = parentComment;
     }
 }
