@@ -18,12 +18,18 @@ public class Like extends BaseEntity {
     @Column(name = "like_id")
     private Long id;
 
+    // user->member
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id")
     private Diary diary;
+
+    public void add(Diary diary, Member member) {
+        this.diary = diary;
+        this.member = member;
+    }
 
 }
