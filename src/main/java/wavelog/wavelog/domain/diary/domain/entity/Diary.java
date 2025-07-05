@@ -8,6 +8,7 @@ import wavelog.wavelog.domain.bookmark.domain.entity.Bookmark;
 import wavelog.wavelog.domain.comment.domain.entity.Comment;
 import wavelog.wavelog.domain.hashtag.domain.entity.Hashtag;
 import wavelog.wavelog.domain.like.domain.entity.Like;
+import wavelog.wavelog.domain.member.domain.entity.Member;
 import wavelog.wavelog.global.common.domain.entity.BaseEntity;
 
 import java.util.ArrayList;
@@ -41,6 +42,11 @@ public class Diary extends BaseEntity {
     @Column
     private String category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
+    // member 없이는 diary를 만들 수 없음
+
     @ManyToMany
     @JoinTable(
             name = "diary_hashtag",
@@ -59,13 +65,24 @@ public class Diary extends BaseEntity {
     private List<Bookmark> bookmarks = new ArrayList<>();
 
     @Builder
-    public Diary(String title, String code, String content, Integer likeCount, Integer viewCount, String category) {
+    public Diary(String title, String code, String content, Integer likeCount, Integer viewCount, String category, Member member) {
         this.title = title;
         this.code = code;
         this.content = content;
         this.likeCount = likeCount;
         this.viewCount = viewCount;
         this.category = category;
+        this.member = member;
+    }
+
+    // DiarySeviceImpl에서 update시 dto의 UpdateRequest의 필드들을 받아오는 용도
+    public void update(String title, String code, String content, String category/*, List<Hashtag> hashtags*/) {
+        this.title = title;
+        this.code = code;
+        this.content = content;
+        this.category = category;
+//        if(hashtags != null)
+//            this.hashtags = new ArrayList<>(hashtags);
     }
 
 }

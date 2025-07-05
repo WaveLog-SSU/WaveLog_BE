@@ -8,6 +8,7 @@ import wavelog.wavelog.domain.member.domain.entity.Member;
 import wavelog.wavelog.global.common.domain.entity.BaseEntity;
 
 @Entity
+@Table(name = "likes")
 @Getter
 @NoArgsConstructor
 public class Like extends BaseEntity {
