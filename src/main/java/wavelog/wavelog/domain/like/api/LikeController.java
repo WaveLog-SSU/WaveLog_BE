@@ -25,12 +25,13 @@ public class LikeController {
     public ResponseEntity<AddResponse> add(@RequestBody AddRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Long memberId = userDetails.getMember().getId();
         AddResponse response = likeService.add(request, memberId);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(201).body(response);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<DeleteResponse> delete(@RequestBody DeleteRequest request) {
-        DeleteResponse response = likeService.delete(request);
+    public ResponseEntity<DeleteResponse> delete(@RequestBody DeleteRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Long memberId = userDetails.getMember().getId();
+        DeleteResponse response = likeService.delete(request, memberId);
         return ResponseEntity.ok(response);
     }
 }

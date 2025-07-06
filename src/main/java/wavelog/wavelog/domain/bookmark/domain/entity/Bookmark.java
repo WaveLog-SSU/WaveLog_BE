@@ -25,5 +25,9 @@ public class Bookmark extends BaseEntity {
     @JoinColumn(name = "diary_id")
     private Diary diary;
 
+    public void add(Diary diary, Member member) {
+        this.diary = diary;
+        this.member = member;
+    }
 
 }

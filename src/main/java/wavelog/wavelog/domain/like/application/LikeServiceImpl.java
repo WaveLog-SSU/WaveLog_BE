@@ -52,19 +52,25 @@ public class LikeServiceImpl implements LikeService{
 
 
     @Override
-    public DeleteResponse delete(DeleteRequest request) {
+    public DeleteResponse delete(DeleteRequest request, Long memberId) {
         Like like = likeRepository.findById(request.getId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좋아요입니다."));
 
+        if(!like.getMember().getId().equals(memberId)) {
+            throw new IllegalArgumentException("본인의 좋아요만 삭제할 수 있습니다.");
+        }
         Diary diary = like.getDiary();
 
         // 좋아요 수 감소 메서드 호출 후 저장
         diary.deleteLikeCount();
         diaryRepository.save(diary);
 
+        likeRepository.delete(like);
+
         return DeleteResponse.builder()
                 .message("좋아요를 삭제하였습니다.")
                 .likeCheck(false)
+                .likeCount(diary.getLikeCount())
                 .build();
     }
 

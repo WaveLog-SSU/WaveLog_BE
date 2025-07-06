@@ -2,6 +2,7 @@ package wavelog.wavelog.domain.diary.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wavelog.wavelog.domain.bookmark.domain.entity.Bookmark;
@@ -17,6 +18,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id", callSuper = false)
 public class Diary extends BaseEntity {
 
     @Id
@@ -38,6 +40,9 @@ public class Diary extends BaseEntity {
 
     @Column(name = "view_count")
     private Integer viewCount = 0;
+
+    @Column(name = "bookmark_count")
+    private Integer bookmarkCount = 0;
 
     @Column
     private String category;
@@ -93,6 +98,17 @@ public class Diary extends BaseEntity {
     public void deleteLikeCount() {
         if(this.likeCount > 0)
             this.likeCount--;
+    }
+
+    // 북마크 수 증가 감소 메서드
+    public void addBookmarkCount()
+    {
+        this.bookmarkCount++;
+    }
+
+    public void deleteBookmarkCount() {
+        if(this.bookmarkCount > 0)
+            this.bookmarkCount--;
     }
 
 }

@@ -8,5 +8,5 @@ import wavelog.wavelog.domain.like.dto.DeleteResponse;
 public interface LikeService {
     AddResponse add(AddRequest request, Long memberId);
 
-    DeleteResponse delete(DeleteRequest request);
+    DeleteResponse delete(DeleteRequest request, Long memberId);
 }
