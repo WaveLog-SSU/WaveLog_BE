@@ -8,6 +8,7 @@ import wavelog.wavelog.domain.comment.domain.repository.CommentRepository;
 import wavelog.wavelog.domain.comment.dto.CreateCommentRequest;
 import wavelog.wavelog.domain.comment.dto.CreateCommentResponse;
 import wavelog.wavelog.domain.comment.dto.GetCommentResponse;
+import wavelog.wavelog.domain.comment.dto.UpdateCommentRequest;
 import wavelog.wavelog.domain.diary.domain.entity.Diary;
 import wavelog.wavelog.domain.diary.domain.repository.DiaryRepository;
 import wavelog.wavelog.domain.member.domain.entity.Member;
@@ -105,6 +106,20 @@ public class CommentServiceImpl implements CommentService {
                     }
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateComment(UpdateCommentRequest request, Long memberId, Long commentId) {
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다. id=" + commentId));
+
+        if (!comment.getMember().getId().equals(memberId)) {
+            throw new IllegalArgumentException("작성자만 댓글을 수정할 수 있습니다.");
+        }
+
+        comment.updateContent(request.getContent());
     }
 
 

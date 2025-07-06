@@ -9,6 +9,7 @@ import wavelog.wavelog.domain.comment.application.CommentService;
 import wavelog.wavelog.domain.comment.dto.CreateCommentRequest;
 import wavelog.wavelog.domain.comment.dto.CreateCommentResponse;
 import wavelog.wavelog.domain.comment.dto.GetCommentResponse;
+import wavelog.wavelog.domain.comment.dto.UpdateCommentRequest;
 
 import java.util.List;
 
@@ -39,5 +40,17 @@ public class CommentController {
         List<GetCommentResponse> response = commentService.getComment(diaryId);
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping("/comments/{comment_id}")
+    public ResponseEntity<Void> updateComment(
+            @PathVariable("comment_id") Long commentId,
+            @Valid @RequestBody UpdateCommentRequest request,
+            Authentication authentication
+    ) {
+        Long memberId = Long.valueOf(authentication.getName());
+        commentService.updateComment(request, memberId, commentId);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
