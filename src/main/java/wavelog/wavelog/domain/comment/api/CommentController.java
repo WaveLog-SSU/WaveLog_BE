@@ -19,7 +19,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/diaries/{diary_id}/comments")
-    public ResponseEntity<CommentResponse> addComment(
+    public ResponseEntity<CommentResponse> createComment(
             @Valid @RequestBody CommentRequest request,
             Authentication authentication,
             @PathVariable(name="diary_id") Long diaryId
