@@ -73,10 +73,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional(readOnly = true)
     public List<GetCommentResponse> getComment(Long diaryId) {
-        // 1) 다이어리 ID 로 모든 댓글(최상위+대댓글) 조회
+
         List<Comment> all = commentRepository.findAllByDiary_IdOrderByCreatedAtAsc(diaryId);
 
-        // 2) 엔티티 → DTO 변환
         List<GetCommentResponse> response = all.stream()
                 .map(comment -> GetCommentResponse.builder()
                         .id(comment.getId())
@@ -89,17 +88,14 @@ public class CommentServiceImpl implements CommentService {
                         .name(comment.getMember().getName())
                         .createdAt(comment.getCreatedAt())
                         .updatedAt(comment.getUpdatedAt())
-                        // replies 는 빈 리스트로 초기화
                         .replies(new ArrayList<>())
                         .build())
                 .collect(Collectors.toList());
 
-        // 3) parentId 별로 그룹핑
         Map<Long, List<GetCommentResponse>> byParent = response.stream()
                 .filter(dto -> dto.getParentCommentId() != null)
                 .collect(Collectors.groupingBy(GetCommentResponse::getParentCommentId));
 
-        // 4) 최상위 댓글만 남기고, replies 세팅
         return response.stream()
                 .filter(dto -> dto.getParentCommentId() == null)
                 .peek(dto -> {
