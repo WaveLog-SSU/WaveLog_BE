@@ -122,5 +122,19 @@ public class CommentServiceImpl implements CommentService {
         comment.updateContent(request.getContent());
     }
 
+    @Override
+    @Transactional
+    public void deleteComment(Long commentId, Long memberId) {
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다. id=" + commentId));
+
+        if (!comment.getMember().getId().equals(memberId)) {
+            throw new IllegalArgumentException("작성자만 댓글을 삭제할 수 있습니다.");
+        }
+
+        commentRepository.delete(comment);
+    }
+
 
 }
