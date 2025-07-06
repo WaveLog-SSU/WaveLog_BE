@@ -22,10 +22,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public CommentResponse createComment(CommentRequest request, Long memberId) {
+    public CommentResponse createComment(CommentRequest request, Long memberId, Long diaryId) {
 
-        Diary diary = diaryRepository.findById(request.getDiaryId())
-                .orElseThrow(() -> new IllegalArgumentException("다이어리를 찾을 수 없습니다. id=" + request.getDiaryId()));
+        Diary diary = diaryRepository.findById(diaryId)
+                .orElseThrow(() -> new IllegalArgumentException("다이어리를 찾을 수 없습니다. id=" + diaryId));
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다. id=" + memberId));
 

@@ -3,11 +3,9 @@ package wavelog.wavelog.domain.comment.api;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wavelog.wavelog.domain.comment.application.CommentService;
 import wavelog.wavelog.domain.comment.dto.CommentRequest;
 import wavelog.wavelog.domain.comment.dto.CommentResponse;
@@ -20,13 +18,14 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/diaies/{diary_id}/comments")
+    @PostMapping("/diaries/{diary_id}/comments")
     public ResponseEntity<CommentResponse> addComment(
             @Valid @RequestBody CommentRequest request,
-            @AuthenticationPrincipal UserDetailsServiceImpl userDetails
+            Authentication authentication,
+            @PathVariable(name="diary_id") Long diaryId
     ) {
-        Long memberId = userDetails.getId();
-        CommentResponse response = commentService.createComment(request, memberId);
+        Long memberId = Long.valueOf(authentication.getName());
+        CommentResponse response = commentService.createComment(request, memberId, diaryId);
         return ResponseEntity
                 .status(201)
                 .body(response);
