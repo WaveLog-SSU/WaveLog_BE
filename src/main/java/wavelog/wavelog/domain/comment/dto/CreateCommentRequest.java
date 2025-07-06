@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CommentRequest {
+public class CreateCommentRequest {
     private String content;
     private Long parentCommentId;
 }

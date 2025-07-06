@@ -1,8 +1,12 @@
 package wavelog.wavelog.domain.comment.application;
 
-import wavelog.wavelog.domain.comment.dto.CommentRequest;
-import wavelog.wavelog.domain.comment.dto.CommentResponse;
+import wavelog.wavelog.domain.comment.dto.CreateCommentRequest;
+import wavelog.wavelog.domain.comment.dto.CreateCommentResponse;
+import wavelog.wavelog.domain.comment.dto.GetCommentResponse;
+
+import java.util.List;
 
 public interface CommentService {
-    CommentResponse createComment(CommentRequest request, Long memberId, Long diaryId);
+    CreateCommentResponse createComment(CreateCommentRequest request, Long memberId, Long diaryId);
+    List<GetCommentResponse> getComment(Long diaryId);
 }

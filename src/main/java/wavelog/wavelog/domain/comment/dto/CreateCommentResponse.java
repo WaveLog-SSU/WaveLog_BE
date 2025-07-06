@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class CommentResponse {
+public class CreateCommentResponse {
     private Long id;
     private String content;
     private Long parentCommentId;

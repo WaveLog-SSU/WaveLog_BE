@@ -4,12 +4,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import wavelog.wavelog.domain.comment.application.CommentService;
-import wavelog.wavelog.domain.comment.dto.CommentRequest;
-import wavelog.wavelog.domain.comment.dto.CommentResponse;
-import wavelog.wavelog.global.security.UserDetailsServiceImpl;
+import wavelog.wavelog.domain.comment.dto.CreateCommentRequest;
+import wavelog.wavelog.domain.comment.dto.CreateCommentResponse;
+import wavelog.wavelog.domain.comment.dto.GetCommentResponse;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/")
@@ -19,15 +20,24 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/diaries/{diary_id}/comments")
-    public ResponseEntity<CommentResponse> createComment(
-            @Valid @RequestBody CommentRequest request,
+    public ResponseEntity<CreateCommentResponse> createComment(
+            @Valid @RequestBody CreateCommentRequest request,
             Authentication authentication,
             @PathVariable(name="diary_id") Long diaryId
     ) {
         Long memberId = Long.valueOf(authentication.getName());
-        CommentResponse response = commentService.createComment(request, memberId, diaryId);
+        CreateCommentResponse response = commentService.createComment(request, memberId, diaryId);
         return ResponseEntity
                 .status(201)
                 .body(response);
     }
+
+    @GetMapping("/diaries/{diary_id}/comments")
+    public ResponseEntity<List<GetCommentResponse>> getComments(
+            @PathVariable(name="diary_id") Long diaryId
+    ) {
+        List<GetCommentResponse> response = commentService.getComment(diaryId);
+        return ResponseEntity.ok(response);
+    }
+
 }
