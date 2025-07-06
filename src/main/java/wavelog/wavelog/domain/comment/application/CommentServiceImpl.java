@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wavelog.wavelog.domain.comment.domain.entity.Comment;
+import wavelog.wavelog.domain.comment.domain.repository.CommentRepository;
 import wavelog.wavelog.domain.comment.dto.CommentRequest;
 import wavelog.wavelog.domain.comment.dto.CommentResponse;
 import wavelog.wavelog.domain.diary.domain.entity.Diary;

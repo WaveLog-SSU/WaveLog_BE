@@ -15,5 +15,3 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByWavelogId(String wavelogId);
 
 }
-
-// 구현체 생성 안해도 됨 -> JpaRepository가 기본적인 CRUD 기능 상속해줌
