@@ -15,5 +15,5 @@ public class UpdateRequest {
     private String code;
     private String content;
     private String category;
-    //private List<String> hashtags = new ArrayList<>();
+    private List<String> hashtags;
 }
