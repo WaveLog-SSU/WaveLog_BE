@@ -31,4 +31,15 @@ public class Hashtag extends BaseEntity {
         this.tag = tag;
     }
 
+    public void update(String tag) {
+        this.tag = tag;
+
+    }
+
+    public void removeDiary(Diary diary) {
+        if (this.diaries.remove(diary)) {
+            diary.getHashtags().remove(this);
+        }
+    }
+
 }

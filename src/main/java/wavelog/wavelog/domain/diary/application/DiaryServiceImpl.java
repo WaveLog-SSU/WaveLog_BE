@@ -1,5 +1,6 @@
 package wavelog.wavelog.domain.diary.application;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +8,7 @@ import wavelog.wavelog.domain.bookmark.domain.repository.BookmarkRepository;
 import wavelog.wavelog.domain.diary.domain.entity.Diary;
 import wavelog.wavelog.domain.diary.domain.repository.DiaryRepository;
 import wavelog.wavelog.domain.diary.dto.*;
+import wavelog.wavelog.domain.hashtag.domain.repository.HashtagRepository;
 import wavelog.wavelog.domain.like.domain.repository.LikeRepository;
 import wavelog.wavelog.domain.member.domain.entity.Member;
 import wavelog.wavelog.domain.member.domain.repository.MemberRepository;
@@ -15,12 +17,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import wavelog.wavelog.domain.hashtag.domain.entity.Hashtag;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class DiaryServiceImpl implements DiaryService{
     private final DiaryRepository diaryRepository;
     private final MemberRepository memberRepository;
+    private final HashtagRepository hashtagRepository;
 
 
     @Override
@@ -103,5 +111,13 @@ public class DiaryServiceImpl implements DiaryService{
                 .build();
     }
 
-
+    /*@Override
+    @Transactional
+    public void deleteHashtagFromDiary(Long diaryId, Long hashtagId) {
+        Diary diary = diaryRepository.findById(diaryId)
+                .orElseThrow(() -> new EntityNotFoundException("Diary not found id=" + diaryId));
+        Hashtag hashtag = hashtagRepository.findById(hashtagId)
+                .orElseThrow(() -> new EntityNotFoundException("Hashtag not found id=" + hashtagId));
+        diary.removeHashtag(hashtag);
+    }*/
 }

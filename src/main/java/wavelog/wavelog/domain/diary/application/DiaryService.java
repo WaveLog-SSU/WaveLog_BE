@@ -11,4 +11,7 @@ public interface DiaryService {
     UpdateResponse update(UpdateRequest request);
 
     ViewResponse view(ViewRequest request);
-}
+
+    //void deleteHashtagFromDiary(Long diaryId, Long hashtagId);
+
+    }
