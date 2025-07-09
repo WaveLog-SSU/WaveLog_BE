@@ -3,9 +3,11 @@ package wavelog.wavelog.domain.diary.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import wavelog.wavelog.domain.diary.dto.*;
 import wavelog.wavelog.domain.diary.application.DiaryService;
+import wavelog.wavelog.global.security.CustomUserDetails;
 
 import java.util.List;
 
@@ -16,11 +18,23 @@ import java.util.List;
 public class DiaryController {
     private final DiaryService diaryService;
 
+//    @GetMapping
+//    public ResponseEntity<List<ViewResponse>> list(@RequestParam(required = false) String date) {
+//        List<ViewResponse> responseList = diaryService.list(date);
+//        return ResponseEntity.ok(responseList);
+//    }
+
     @GetMapping
-    public ResponseEntity<List<ViewResponse>> list(@RequestParam(required = false) String date) {
-        List<ViewResponse> responseList = diaryService.list(date);
+    public ResponseEntity<List<ViewResponse>> list(
+            @RequestParam(required = false) String date,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        Long memberId = userDetails.getMemberId();
+        List<ViewResponse> responseList = diaryService.listByDateAndMember(date, memberId);
         return ResponseEntity.ok(responseList);
     }
+
+
 
     @PostMapping
     public ResponseEntity<CreateResponse> create(@RequestBody CreateRequest request) {

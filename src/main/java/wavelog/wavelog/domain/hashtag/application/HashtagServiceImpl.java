@@ -26,7 +26,7 @@ public class HashtagServiceImpl implements HashtagService {
     @Override
     public CreateResponse create(Long diaryId, CreateRequest request) {
         Diary diary = diaryRepository.findById(diaryId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 다이어리입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 다이어리입니다."));
         Hashtag hashtag = hashtagRepository.findByTag(request.getTag())
                 .orElseGet(() -> hashtagRepository.save(
                         Hashtag.builder()
@@ -58,10 +58,10 @@ public class HashtagServiceImpl implements HashtagService {
     @Override
     public ViewResponse view(Long diaryId, Long id) {
         diaryRepository.findById(diaryId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 다이어리입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 다이어리입니다."));
 
         Hashtag hashtag = hashtagRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 해시태그입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 해시태그입니다."));
 
         if (!diaryHashtagRepository.findByDiaryIdAndHashtagId(diaryId, id).isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "연결되지 않은 해시태그입니다.");
@@ -76,9 +76,9 @@ public class HashtagServiceImpl implements HashtagService {
     @Override
     public UpdateResponse update(Long diaryId, Long id, UpdateRequest request) {
         diaryRepository.findById(diaryId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 다이어리입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"존재하지 않는 다이어리입니다."));
         Hashtag hashtag = hashtagRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 해시태그입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 해시태그입니다."));
 
         hashtag.update(request.getTag());
 
@@ -91,10 +91,10 @@ public class HashtagServiceImpl implements HashtagService {
     @Override
     public DeleteResponse delete(Long diaryId, Long id) {
         diaryRepository.findById(diaryId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 다이어리입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 다이어리입니다."));
 
         Hashtag hashtag = hashtagRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 해시태그입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 해시태그입니다."));
 
         Optional<DiaryHashtag> relation = diaryHashtagRepository.findByDiaryIdAndHashtagId(diaryId, id);
 
