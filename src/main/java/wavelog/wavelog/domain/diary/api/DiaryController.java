@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import wavelog.wavelog.domain.diary.dto.*;
 import wavelog.wavelog.domain.diary.application.DiaryService;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/diaries")
@@ -14,7 +16,13 @@ import wavelog.wavelog.domain.diary.application.DiaryService;
 public class DiaryController {
     private final DiaryService diaryService;
 
-    @PostMapping("/create")
+    @GetMapping
+    public ResponseEntity<List<ViewResponse>> list(@RequestParam(required = false) String date) {
+        List<ViewResponse> responseList = diaryService.list(date);
+        return ResponseEntity.ok(responseList);
+    }
+
+    @PostMapping
     public ResponseEntity<CreateResponse> create(@RequestBody CreateRequest request) {
         CreateResponse response = diaryService.create(request);
         return ResponseEntity
@@ -22,21 +30,21 @@ public class DiaryController {
                 .body(response);
     }
 
-    @GetMapping("/view")
-    public ResponseEntity<ViewResponse> view(@RequestBody ViewRequest request) {
-        ViewResponse response = diaryService.view(request);
+    @GetMapping("/{diary_id}")
+    public ResponseEntity<ViewResponse> view(@PathVariable("diary_id") Long diaryId) {
+        ViewResponse response = diaryService.view(diaryId);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<UpdateResponse> update(@RequestBody UpdateRequest request) {
-        UpdateResponse response = diaryService.update(request);
+    @PutMapping("/{diary_id}")
+    public ResponseEntity<UpdateResponse> update(@PathVariable("diary_id") Long diaryId, @RequestBody UpdateRequest request) {
+        UpdateResponse response = diaryService.update(diaryId, request);
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<DeleteResponse> delete(@RequestBody DeleteRequest request) {
-        DeleteResponse response = diaryService.delete(request);
+    @DeleteMapping("/{diary_id}")
+    public ResponseEntity<DeleteResponse> delete(@PathVariable("diary_id") Long diaryId) {
+        DeleteResponse response = diaryService.delete(diaryId);
         return ResponseEntity.ok(response);
     }
 

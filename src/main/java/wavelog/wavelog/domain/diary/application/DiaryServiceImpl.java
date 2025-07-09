@@ -2,6 +2,7 @@ package wavelog.wavelog.domain.diary.application;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wavelog.wavelog.domain.bookmark.domain.repository.BookmarkRepository;
@@ -30,6 +31,22 @@ public class DiaryServiceImpl implements DiaryService{
     private final MemberRepository memberRepository;
     private final HashtagRepository hashtagRepository;
 
+    @Override
+    public List<ViewResponse> list(String date) {
+        List<Diary> diaries;
+
+        if(date != null) {
+            diaries = diaryRepository.findByCreatedAtDate(date);
+        } else{
+            diaries = diaryRepository.findAll();
+        }
+
+        List<ViewResponse> responses = new ArrayList<>();
+        for(Diary diary : diaries) {
+            responses.add(convertToViewResponse(diary));
+        }
+        return responses;
+    }
 
     @Override
     public CreateResponse create(CreateRequest request) {
@@ -60,8 +77,8 @@ public class DiaryServiceImpl implements DiaryService{
     }
 
     @Override
-    public DeleteResponse delete(DeleteRequest request) {
-        Diary diary = diaryRepository.findById(request.getId())
+    public DeleteResponse delete(Long diaryId) {
+        Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 다이어리입니다."));
         diaryRepository.delete(diary);
         // DTO 반환
@@ -72,8 +89,8 @@ public class DiaryServiceImpl implements DiaryService{
     }
 
     @Override
-    public UpdateResponse update(UpdateRequest request) {
-        Diary diary = diaryRepository.findById(request.getId())
+    public UpdateResponse update(Long diaryId, UpdateRequest request) {
+        Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 다이어리입니다."));
         // Diary Entity에서 만들어놓은 update 메서드
         diary.update(
@@ -91,8 +108,8 @@ public class DiaryServiceImpl implements DiaryService{
     }
 
     @Override
-    public ViewResponse view(ViewRequest request) {
-        Diary diary = diaryRepository.findById(request.getId())
+    public ViewResponse view(Long diaryId) {
+        Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 다이어리입니다."));
 
         // DTO 반환
@@ -111,13 +128,20 @@ public class DiaryServiceImpl implements DiaryService{
                 .build();
     }
 
-    /*@Override
-    @Transactional
-    public void deleteHashtagFromDiary(Long diaryId, Long hashtagId) {
-        Diary diary = diaryRepository.findById(diaryId)
-                .orElseThrow(() -> new EntityNotFoundException("Diary not found id=" + diaryId));
-        Hashtag hashtag = hashtagRepository.findById(hashtagId)
-                .orElseThrow(() -> new EntityNotFoundException("Hashtag not found id=" + hashtagId));
-        diary.removeHashtag(hashtag);
-    }*/
+    private ViewResponse convertToViewResponse(Diary diary) {
+        return ViewResponse.builder()
+                .id(diary.getId())
+                .title(diary.getTitle())
+                .code(diary.getCode())
+                .content(diary.getContent())
+                .hashtags(new ArrayList<>())
+                .wavelogId(diary.getMember().getWavelogId())
+                .nickname(diary.getMember().getNickname())
+                .profileImageUrl(diary.getMember().getProfileImageUrl())
+                .createdAt(diary.getCreatedAt())
+                .viewCount(diary.getViewCount())
+                .likeCount(diary.getLikeCount())
+                .build();
+    }
+
 }
