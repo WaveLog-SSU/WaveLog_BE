@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import wavelog.wavelog.domain.diary.domain.entity.Diary;
+import wavelog.wavelog.domain.diaryHashtag.domain.entity.DiaryHashtag;
 import wavelog.wavelog.global.common.domain.entity.BaseEntity;
 
 import java.util.ArrayList;
@@ -23,8 +23,10 @@ public class Hashtag extends BaseEntity {
     @Column
     private String tag;
 
-    @ManyToMany(mappedBy = "hashtags")
-    private List<Diary> diaries = new ArrayList<>();
+    // ManyToMany 매핑 수정
+//    @ManyToMany(mappedBy = "hashtags")
+    @OneToMany(mappedBy = "hashtag", cascade = CascadeType.ALL)
+    private List<DiaryHashtag> diaryHashtags = new ArrayList<>();
 
     @Builder
     public Hashtag(String tag) {
@@ -34,12 +36,6 @@ public class Hashtag extends BaseEntity {
     public void update(String tag) {
         this.tag = tag;
 
-    }
-
-    public void removeDiary(Diary diary) {
-        if (this.diaries.remove(diary)) {
-            diary.getHashtags().remove(this);
-        }
     }
 
 }

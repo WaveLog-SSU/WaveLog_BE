@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wavelog.wavelog.domain.bookmark.domain.entity.Bookmark;
 import wavelog.wavelog.domain.comment.domain.entity.Comment;
-import wavelog.wavelog.domain.hashtag.domain.entity.Hashtag;
+import wavelog.wavelog.domain.diaryHashtag.domain.entity.DiaryHashtag;
 import wavelog.wavelog.domain.like.domain.entity.Like;
 import wavelog.wavelog.domain.member.domain.entity.Member;
 import wavelog.wavelog.global.common.domain.entity.BaseEntity;
@@ -52,13 +52,15 @@ public class Diary extends BaseEntity {
     private Member member;
     // member 없이는 diary를 만들 수 없음
 
-    @ManyToMany
-    @JoinTable(
-            name = "diary_hashtag",
-            joinColumns = @JoinColumn(name = "diary_id"),
-            inverseJoinColumns = @JoinColumn(name = "hashtag_id")
-    )
-    private List<Hashtag> hashtags = new ArrayList<>();
+    // ManyToMany 매핑 수정
+//    @ManyToMany
+//    @JoinTable(
+//            name = "diary_hashtag",
+//            joinColumns = @JoinColumn(name = "diary_id"),
+//            inverseJoinColumns = @JoinColumn(name = "hashtag_id")
+//    )
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DiaryHashtag> DiaryHashtags = new ArrayList<>();
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
