@@ -33,7 +33,7 @@ public class SecurityConfig {
         httpSecurity
                 // CSRF 비활성화
         .csrf(csrf -> csrf.disable())
-                // CORS 활성화 (WebMvcConfigurer 등에서 미리 허용 origin/메소드 등을 설정해 두어야 동작)
+                // CORS 활성화 
         .cors(withDefaults())
                 // HTTP Basic 인증 비활성화
         .httpBasic(HttpBasicConfigurer::disable)
