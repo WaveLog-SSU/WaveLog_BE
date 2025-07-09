@@ -3,6 +3,7 @@ package wavelog.wavelog.domain.member.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -37,4 +38,10 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
+    @PatchMapping("")
+    public ResponseEntity<GetMemberResponse> updateMember(Authentication authentication, @RequestBody UpdateMemberRequest request) {
+        Long memberId = Long.valueOf(authentication.getName());
+        GetMemberResponse response = memberService.updateMember(memberId, request);
+        return ResponseEntity.ok(response);
+    }
 }

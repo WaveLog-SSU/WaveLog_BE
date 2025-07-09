@@ -10,4 +10,5 @@ public interface MemberService {
 
     GetMemberResponse getMember(Long memberId);
 
+    GetMemberResponse updateMember(Long memberId, UpdateMemberRequest request);
 }

@@ -82,8 +82,27 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public GetMemberResponse getMember(Long memberId) {
+
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "유저가 존재하지 않습니다."));
+
+        return GetMemberResponse.builder()
+                .wavelogId(member.getWavelogId())
+                .name(member.getName())
+                .nickname(member.getNickname())
+                .profileImageUrl(member.getProfileImageUrl())
+                .introIndex(member.getIntroIndex())
+                .build();
+    }
+
+    @Override
+    public GetMemberResponse updateMember(Long memberId, UpdateMemberRequest request) {
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "유저가 존재하지 않습니다."));
+
+        member.update(request);
+
         return GetMemberResponse.builder()
                 .wavelogId(member.getWavelogId())
                 .name(member.getName())
