@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import wavelog.wavelog.global.jwt.JwtAuthenticationFilter;
 import wavelog.wavelog.global.jwt.JwtTokenProvider;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -24,12 +27,17 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         JwtAuthenticationFilter jwtFilter = new JwtAuthenticationFilter(tokenProvider, userDetailsService);
 
-        http
+        httpSecurity
                 // CSRF 비활성화
         .csrf(csrf -> csrf.disable())
+                // CORS 활성화
+        .cors(withDefaults())
+                // HTTP Basic 인증 비활성화
+        .httpBasic(HttpBasicConfigurer::disable)
+
                 // 세션 없이 JWT만으로 인증
         .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -48,7 +56,7 @@ public class SecurityConfig {
                 )
         );
 
-        return http.build();
+        return httpSecurity.build();
     }
 
     @Bean
