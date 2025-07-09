@@ -9,6 +9,7 @@ import wavelog.wavelog.domain.bookmark.domain.entity.Bookmark;
 import wavelog.wavelog.domain.comment.domain.entity.Comment;
 import wavelog.wavelog.domain.diary.domain.entity.Diary;
 import wavelog.wavelog.domain.like.domain.entity.Like;
+import wavelog.wavelog.domain.member.dto.UpdateMemberRequest;
 import wavelog.wavelog.global.common.domain.entity.BaseEntity;
 
 import java.util.ArrayList;
@@ -63,5 +64,11 @@ public class Member extends BaseEntity {
         this.nickname = nickname;
         this.profileImageUrl = profileImageUrl;
         this.introIndex = introIndex;
+    }
+
+    public void update(UpdateMemberRequest request) {
+        this.nickname = request.getNickname();
+        this.profileImageUrl = request.getProfileImageUrl();
+        this.introIndex = request.getIntroIndex();
     }
 }

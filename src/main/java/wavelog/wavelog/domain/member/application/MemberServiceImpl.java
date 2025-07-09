@@ -1,20 +1,21 @@
 package wavelog.wavelog.domain.member.application;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import wavelog.wavelog.domain.member.domain.entity.Member;
 import wavelog.wavelog.domain.member.domain.repository.MemberRepository;
-import wavelog.wavelog.domain.member.dto.LoginRequest;
-import wavelog.wavelog.domain.member.dto.LoginResponse;
-import wavelog.wavelog.domain.member.dto.SignUpRequest;
-import wavelog.wavelog.domain.member.dto.SignUpResponse;
+import wavelog.wavelog.domain.member.dto.*;
 import wavelog.wavelog.global.jwt.JwtTokenProvider;
 import wavelog.wavelog.global.jwt.dto.JwtToken;
+
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -77,5 +78,37 @@ public class MemberServiceImpl implements MemberService {
                     .accessToken(jwt.getAccessToken())
                     .build();
 
+    }
+
+    @Override
+    public GetMemberResponse getMember(Long memberId) {
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "유저가 존재하지 않습니다."));
+
+        return GetMemberResponse.builder()
+                .wavelogId(member.getWavelogId())
+                .name(member.getName())
+                .nickname(member.getNickname())
+                .profileImageUrl(member.getProfileImageUrl())
+                .introIndex(member.getIntroIndex())
+                .build();
+    }
+
+    @Override
+    public GetMemberResponse updateMember(Long memberId, UpdateMemberRequest request) {
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "유저가 존재하지 않습니다."));
+
+        member.update(request);
+
+        return GetMemberResponse.builder()
+                .wavelogId(member.getWavelogId())
+                .name(member.getName())
+                .nickname(member.getNickname())
+                .profileImageUrl(member.getProfileImageUrl())
+                .introIndex(member.getIntroIndex())
+                .build();
     }
 }

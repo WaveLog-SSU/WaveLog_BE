@@ -3,13 +3,11 @@ package wavelog.wavelog.domain.member.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import wavelog.wavelog.domain.member.dto.LoginRequest;
-import wavelog.wavelog.domain.member.dto.LoginResponse;
-import wavelog.wavelog.domain.member.dto.SignUpRequest;
-import wavelog.wavelog.domain.member.dto.SignUpResponse;
+import wavelog.wavelog.domain.member.dto.*;
 import wavelog.wavelog.domain.member.application.MemberService;
 
 @RestController
@@ -34,5 +32,16 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{member_id}")
+    public ResponseEntity<GetMemberResponse> getMember(@PathVariable("member_id") Long memberId) {
+        GetMemberResponse response = memberService.getMember(memberId);
+        return ResponseEntity.ok(response);
+    }
 
+    @PatchMapping("")
+    public ResponseEntity<GetMemberResponse> updateMember(Authentication authentication, @RequestBody UpdateMemberRequest request) {
+        Long memberId = Long.valueOf(authentication.getName());
+        GetMemberResponse response = memberService.updateMember(memberId, request);
+        return ResponseEntity.ok(response);
+    }
 }

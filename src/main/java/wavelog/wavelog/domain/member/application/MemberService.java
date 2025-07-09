@@ -1,9 +1,6 @@
 package wavelog.wavelog.domain.member.application;
 
-import wavelog.wavelog.domain.member.dto.SignUpRequest;
-import wavelog.wavelog.domain.member.dto.SignUpResponse;
-import wavelog.wavelog.domain.member.dto.LoginRequest;
-import wavelog.wavelog.domain.member.dto.LoginResponse;
+import wavelog.wavelog.domain.member.dto.*;
 
 public interface MemberService {
 
@@ -11,4 +8,7 @@ public interface MemberService {
 
     LoginResponse login(LoginRequest request);
 
+    GetMemberResponse getMember(Long memberId);
+
+    GetMemberResponse updateMember(Long memberId, UpdateMemberRequest request);
 }
