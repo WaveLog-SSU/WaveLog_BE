@@ -10,4 +10,5 @@ import java.util.List;
 public class DeleteResponse {
     private String message;
     private boolean likeCheck;
+    private int likeCount;
 }

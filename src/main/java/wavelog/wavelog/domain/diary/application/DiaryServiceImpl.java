@@ -3,9 +3,11 @@ package wavelog.wavelog.domain.diary.application;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wavelog.wavelog.domain.bookmark.domain.repository.BookmarkRepository;
 import wavelog.wavelog.domain.diary.domain.entity.Diary;
 import wavelog.wavelog.domain.diary.domain.repository.DiaryRepository;
 import wavelog.wavelog.domain.diary.dto.*;
+import wavelog.wavelog.domain.like.domain.repository.LikeRepository;
 import wavelog.wavelog.domain.member.domain.entity.Member;
 import wavelog.wavelog.domain.member.domain.repository.MemberRepository;
 
@@ -19,6 +21,7 @@ import java.util.List;
 public class DiaryServiceImpl implements DiaryService{
     private final DiaryRepository diaryRepository;
     private final MemberRepository memberRepository;
+
 
     @Override
     public CreateResponse create(CreateRequest request) {
@@ -99,4 +102,6 @@ public class DiaryServiceImpl implements DiaryService{
                 .likeCount(diary.getLikeCount())
                 .build();
     }
+
+
 }

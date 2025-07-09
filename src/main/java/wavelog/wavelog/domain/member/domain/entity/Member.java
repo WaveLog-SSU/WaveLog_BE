@@ -2,6 +2,7 @@ package wavelog.wavelog.domain.member.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wavelog.wavelog.domain.bookmark.domain.entity.Bookmark;
@@ -16,6 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id", callSuper = false)
 public class Member extends BaseEntity {
 
     @Id

@@ -1,12 +1,10 @@
-package wavelog.wavelog.domain.like.domain.repository;
+package wavelog.wavelog.domain.bookmark.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import wavelog.wavelog.domain.bookmark.domain.entity.Bookmark;
 import wavelog.wavelog.domain.diary.domain.entity.Diary;
-import wavelog.wavelog.domain.like.domain.entity.Like;
 import wavelog.wavelog.domain.member.domain.entity.Member;
 
-import javax.xml.crypto.Data;
-
-public interface LikeRepository extends JpaRepository<Like, Long> {
+public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     boolean existsByDiaryAndMember(Diary diary, Member member);
 }
