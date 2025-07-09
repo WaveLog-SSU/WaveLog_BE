@@ -38,7 +38,7 @@ public class Member extends BaseEntity {
     @Column(unique = true)
     private String nickname;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String profileImageUrl;
 
     @Column
