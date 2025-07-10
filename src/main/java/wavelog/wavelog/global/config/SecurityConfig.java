@@ -34,7 +34,7 @@ public class SecurityConfig {
                 // CSRF 비활성화
         .csrf(csrf -> csrf.disable())
                 // CORS 활성화
-        //.cors(withDefaults())
+        .cors(withDefaults())
                 // HTTP Basic 인증 비활성화
         .httpBasic(HttpBasicConfigurer::disable)
 

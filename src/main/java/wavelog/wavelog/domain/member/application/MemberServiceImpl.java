@@ -76,6 +76,7 @@ public class MemberServiceImpl implements MemberService {
             return LoginResponse.builder()
                     .grantType(jwt.getGrantType())
                     .accessToken(jwt.getAccessToken())
+                    .memberId(member.getId())
                     .build();
 
     }
