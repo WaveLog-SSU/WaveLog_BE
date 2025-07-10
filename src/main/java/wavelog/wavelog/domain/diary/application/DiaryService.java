@@ -18,7 +18,7 @@ public interface DiaryService {
 
     List<ViewResponse> listByDateAndMember(String date, Long memberId);
 
-
+    CountDiaryResponse countDiary(int year, int month, Long memberId);
     //void deleteHashtagFromDiary(Long diaryId, Long hashtagId);
 
     }

@@ -62,4 +62,10 @@ public class DiaryController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/wave/{member_id}")
+    public ResponseEntity<CountDiaryResponse> count(@PathVariable("member_id") Long memberId, @RequestParam(name="year") int year, @RequestParam(name="month") int month) {
+        CountDiaryResponse response = diaryService.countDiary(year, month, memberId);
+        return ResponseEntity.ok(response);
+    }
+
 }
