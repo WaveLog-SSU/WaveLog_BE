@@ -43,6 +43,18 @@ public class DiaryServiceImpl implements DiaryService{
                 .map(this::convertToViewResponse)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public CountDiaryResponse countDiary(int year, int month, Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."));
+
+        long cnt = diaryRepository.countDistinctByMemberAndYearAndMonth(memberId, year, month);
+        return CountDiaryResponse.builder()
+                .count(cnt)
+                .build();
+    }
+
     @Override
     public CreateResponse create(CreateRequest request) {
         Member member = memberRepository.findById(request.getMemberId())
