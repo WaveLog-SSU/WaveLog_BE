@@ -9,7 +9,7 @@ import wavelog.wavelog.domain.hashtag.application.HashtagService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/diaries/{diary_id}/hashtags")
+@RequestMapping("/api/diaries/{diary_id}/hashtags")
 public class HashtagController {
     private final HashtagService hashtagService;
 

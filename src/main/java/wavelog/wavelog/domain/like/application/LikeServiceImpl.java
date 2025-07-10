@@ -1,8 +1,13 @@
 package wavelog.wavelog.domain.like.application;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 import wavelog.wavelog.domain.diary.application.DiaryService;
 import wavelog.wavelog.domain.diary.domain.entity.Diary;
 import wavelog.wavelog.domain.diary.domain.repository.DiaryRepository;
@@ -27,9 +32,9 @@ public class LikeServiceImpl implements LikeService{
     @Override
     public AddResponse add(AddRequest request, Long memberId) {
         Diary diary = diaryRepository.findById(request.getDiaryId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 다이어리입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 다이어리입니다."));
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."));
 
         if(likeRepository.existsByDiaryAndMember(diary, member)) {
             throw new IllegalArgumentException("이미 좋아요를 눌렀습니다.");
@@ -54,10 +59,10 @@ public class LikeServiceImpl implements LikeService{
     @Override
     public DeleteResponse delete(DeleteRequest request, Long memberId) {
         Like like = likeRepository.findById(request.getId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좋아요입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"존재하지 않는 좋아요입니다."));
 
         if(!like.getMember().getId().equals(memberId)) {
-            throw new IllegalArgumentException("본인의 좋아요만 삭제할 수 있습니다.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"본인의 좋아요만 삭제할 수 있습니다.");
         }
         Diary diary = like.getDiary();
 

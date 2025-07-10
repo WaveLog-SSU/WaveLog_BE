@@ -9,6 +9,10 @@ import wavelog.wavelog.domain.diary.domain.entity.Diary;
 import java.util.List;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-    @Query("SELECT d FROM Diary d WHERE FUNCTION('DATE', d.createdAt) = :date")
-    List<Diary> findByCreatedAtDate(@Param("date") String date);
+
+    @Query("SELECT d FROM Diary d WHERE FUNCTION('DATE', d.createdAt) = :date AND d.member.id = :memberId")
+    List<Diary> findByCreatedAtDateAndMemberId(@Param("date") String date, @Param("memberId") Long memberId);
+
+    List<Diary> findByMemberId(Long memberId);
+
 }
