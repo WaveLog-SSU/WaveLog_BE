@@ -1,5 +1,6 @@
 package wavelog.wavelog.domain.diary.api;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +67,12 @@ public class DiaryController {
     public ResponseEntity<CountDiaryResponse> count(@PathVariable("member_id") Long memberId, @RequestParam(name="year") int year, @RequestParam(name="month") int month) {
         CountDiaryResponse response = diaryService.countDiary(year, month, memberId);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/members/{member_id}")
+    public ResponseEntity<List<ViewResponse>> listByMemberId(@PathVariable("member_id") Long memberId) {
+        List<ViewResponse> responseList = diaryService.listByMemberId(memberId);
+        return ResponseEntity.ok(responseList);
     }
 
 }
