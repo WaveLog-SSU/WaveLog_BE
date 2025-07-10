@@ -30,7 +30,7 @@ public class QuizServiceImpl implements QuizService {
             Long memberId
     ) throws JsonProcessingException {
         // 회원 다이어리 모두 조회
-        List<Diary> diaries = diaryRepo.findAllByMember_Id(memberId);
+        List<Diary> diaries = diaryRepo.findByMemberId(memberId);
 
         // 다이어리가 없으면 빈 리스트 반환
         if (diaries.isEmpty()) {

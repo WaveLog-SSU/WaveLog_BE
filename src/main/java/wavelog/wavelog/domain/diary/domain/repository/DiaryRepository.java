@@ -15,8 +15,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     List<Diary> findByMemberId(Long memberId);
 
-    List<Diary> findAllByMember_Id(Long memberId);
-
     @Query(
             value =
                     "SELECT COUNT(DISTINCT DATE(created_at)) " +

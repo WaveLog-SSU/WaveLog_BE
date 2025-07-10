@@ -4,6 +4,7 @@ import org.hibernate.sql.Update;
 import wavelog.wavelog.domain.diary.domain.entity.Diary;
 import wavelog.wavelog.domain.diary.dto.*;
 
+import javax.swing.text.View;
 import java.util.List;
 
 public interface DiaryService {
@@ -19,6 +20,9 @@ public interface DiaryService {
     List<ViewResponse> listByDateAndMember(String date, Long memberId);
 
     CountDiaryResponse countDiary(int year, int month, Long memberId);
+
+    List<ViewResponse> listByMemberId(Long memberId);
+
     //void deleteHashtagFromDiary(Long diaryId, Long hashtagId);
 
     }

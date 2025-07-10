@@ -56,6 +56,15 @@ public class DiaryServiceImpl implements DiaryService{
     }
 
     @Override
+    public List<ViewResponse> listByMemberId(Long memberId) {
+        List<Diary> diaries = diaryRepository.findByMemberId(memberId);
+
+        return diaries.stream()
+                .map(this::convertToViewResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public CreateResponse create(CreateRequest request) {
         Member member = memberRepository.findById(request.getMemberId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."));
@@ -145,6 +154,7 @@ public class DiaryServiceImpl implements DiaryService{
                 .code(diary.getCode())
                 .content(diary.getContent())
                 .hashtags(hashtagTags)
+                .category(diary.getCategory())
                 .wavelogId(diary.getMember().getWavelogId())
                 .nickname(diary.getMember().getNickname())
                 .profileImageUrl(diary.getMember().getProfileImageUrl())
