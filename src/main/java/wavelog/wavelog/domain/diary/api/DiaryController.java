@@ -75,4 +75,10 @@ public class DiaryController {
         return ResponseEntity.ok(responseList);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<ViewResponse>> view(@RequestParam("q") String query) {
+        List<ViewResponse> response = diaryService.search(query);
+        return ResponseEntity.ok(response);
+    }
+
 }

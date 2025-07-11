@@ -30,4 +30,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
             @Param("month")    int month
     );
 
+    List<Diary> findByTitleContainingIgnoreCase(String title);
+
 }

@@ -65,6 +65,15 @@ public class DiaryServiceImpl implements DiaryService{
     }
 
     @Override
+    public List<ViewResponse> search(String query) {
+        List<Diary> diaries = diaryRepository.findByTitleContainingIgnoreCase(query);
+
+        return diaries.stream()
+                .map(this::convertToViewResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public CreateResponse create(CreateRequest request) {
         Member member = memberRepository.findById(request.getMemberId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."));
