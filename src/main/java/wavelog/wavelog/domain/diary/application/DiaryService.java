@@ -23,6 +23,8 @@ public interface DiaryService {
 
     List<ViewResponse> listByMemberId(Long memberId);
 
+    List<ViewResponse> search(String query);
+
     //void deleteHashtagFromDiary(Long diaryId, Long hashtagId);
 
     }
