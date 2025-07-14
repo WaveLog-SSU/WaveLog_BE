@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import wavelog.wavelog.domain.diary.dto.*;
@@ -28,9 +29,9 @@ public class DiaryController {
     @GetMapping
     public ResponseEntity<List<ViewResponse>> list(
             @RequestParam(name = "date", required = false) String date,
-            @AuthenticationPrincipal CustomUserDetails userDetails
+            Authentication authentication
     ) {
-        Long memberId = userDetails.getMemberId();
+        Long memberId = Long.valueOf(authentication.getName());
         List<ViewResponse> responseList = diaryService.listByDateAndMember(date, memberId);
         return ResponseEntity.ok(responseList);
     }
