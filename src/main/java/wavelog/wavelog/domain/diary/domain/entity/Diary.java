@@ -60,7 +60,7 @@ public class Diary extends BaseEntity {
 //            inverseJoinColumns = @JoinColumn(name = "hashtag_id")
 //    )
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DiaryHashtag> DiaryHashtags = new ArrayList<>();
+    private List<DiaryHashtag> diaryHashtags = new ArrayList<>();
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
