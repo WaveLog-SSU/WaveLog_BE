@@ -27,7 +27,7 @@ public class DiaryController {
 
     @GetMapping
     public ResponseEntity<List<ViewResponse>> list(
-            @RequestParam(required = false) String date,
+            @RequestParam(name = "date", required = false) String date,
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         Long memberId = userDetails.getMemberId();
